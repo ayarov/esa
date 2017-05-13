@@ -151,7 +151,7 @@ public class WikiIndexer extends DefaultHandler implements AutoCloseable {
         doc.add(new StoredField(TITLE_FIELD, title));
         Analyzer analyzer = indexWriter.getAnalyzer();
         doc.add(new TextField(TEXT_FIELD, wikiText, Field.Store.NO));
-        indexWriter.addDocument(doc);
+        indexWriter.addDocument(doc, analyzer);
         return true;
     }
 

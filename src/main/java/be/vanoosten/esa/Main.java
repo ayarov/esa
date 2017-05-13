@@ -61,8 +61,8 @@ public class Main {
         File conceptTermIndexDirectory = factory.getConceptTermIndexDirectory();
 
         // The following lines are commented, because they can take a looong time.
-        // indexing(termDocIndexDirectory, wikipediaDumpFile, stopWords);
-        // createConceptTermIndex(termDocIndexDirectory, conceptTermIndexDirectory);
+        indexing(termDocIndexDirectory, wikipediaDumpFile, stopWords);
+        createConceptTermIndex(termDocIndexDirectory, conceptTermIndexDirectory);
     }
 
     /**
