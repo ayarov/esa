@@ -1,6 +1,8 @@
 package be.vanoosten.esa.tools;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+
 import org.apache.lucene.queryparser.classic.ParseException;
 
 /**
@@ -9,16 +11,33 @@ import org.apache.lucene.queryparser.classic.ParseException;
  */
 public class SemanticSimilarityTool {
 
-    Vectorizer vectorizer;
+    private Vectorizer vectorizer;
     
     public SemanticSimilarityTool(Vectorizer vectorizer) {
         this.vectorizer = vectorizer;
     }
     
-    public float findSemanticSimilarity(String formerText, String latterText) throws ParseException, IOException{
-        ConceptVector formerVector = vectorizer.vectorize(formerText);
-        ConceptVector latterVector = vectorizer.vectorize(latterText);
-        return formerVector.dotProduct(latterVector);
+    public float findSemanticSimilarity(String textA, String textB) {
+        try {
+            ConceptVector vectorA = vectorizer.vectorize(textA);
+            ConceptVector vectorB = vectorizer.vectorize(textB);
+            return vectorA.dotProduct(vectorB);
+        }
+        catch(ParseException|IOException e)
+        {
+            e.printStackTrace();
+            return 0.0f;
+        }
+    }
+
+    public float findSemanticSimilarity(byte[] bytesA, byte[] bytesB) {
+        try {
+            return findSemanticSimilarity(new String(bytesA, "UTF-8"), new String(bytesB, "UTF-8"));
+        }
+        catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return 0.0f;
+        }
     }
     
 }

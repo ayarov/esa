@@ -29,9 +29,17 @@ public class SemanticSimilarityTest {
     }
 
     @Test
-    public void testSimilarity() throws Exception {
+    public void testTextSimilarity() throws Exception {
         float dotProduct = similarity.findSemanticSimilarity("New York City",
                 "Lower Manhattan");
+        assertTrue(dotProduct > 0.0f);
+    }
+
+    @Test
+    public void testBytesSimilarity() throws Exception {
+        byte[] bytesA = "New York City".getBytes("UTF-8");
+        byte[] bytesB = "Lower Manhattan".getBytes("UTF-8");
+        float dotProduct = similarity.findSemanticSimilarity(bytesA, bytesB);
         assertTrue(dotProduct > 0.0f);
     }
 }
