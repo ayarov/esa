@@ -3,6 +3,7 @@ package be.vanoosten.esa.tools;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+import joptsimple.internal.Strings;
 import org.apache.lucene.queryparser.classic.ParseException;
 
 /**
@@ -19,6 +20,9 @@ public class SemanticSimilarityTool {
     
     public float findSemanticSimilarity(String textA, String textB) {
         try {
+            if (Strings.isNullOrEmpty(textA) || Strings.isNullOrEmpty(textB))
+                return 0.0f;
+
             ConceptVector vectorA = vectorizer.vectorize(textA);
             ConceptVector vectorB = vectorizer.vectorize(textB);
             return vectorA.dotProduct(vectorB);
